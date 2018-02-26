@@ -1,0 +1,12 @@
+1) Create any directory, eg: IPTest
+2) Create static file with no extension of the file, eg: statifile
+3) Run the following command
+	cf push iptest --no-start
+4) Do health check on the app
+     cf set-health-check iptest none
+5) Open application log in other window
+    cf logs iptest
+
+6) cf push iptest -c "ping 10.219.160.130"
+   or 
+   cf push iptest -c "ping google.com"

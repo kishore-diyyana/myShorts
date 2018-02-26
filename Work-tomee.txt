@@ -1,0 +1,90 @@
+catalina run
+
+
+https://svn.apache.org/repos/asf/tomee/tomee/trunk/examples/moviefun
+
+
+-Dmaven.test.skip=true
+-DskipTests=false
+-DskipTests
+
+
+
+
+
+Tomee
+
+<Resource name="jdbcds" auth="Container"
+   type="javax.sql.DataSource" 
+   driverClassName="oracle.jdbc.OracleDriver"
+   username="hr" 
+   password="hr" 
+   url="jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(HOST=myhost)(PORT=1521)(PROTOCOL=tcp))(CONNECT_DATA=(SERVICE_NAME=myorcldbservicename)))" />
+
+
+web.xml
+<resource-ref>
+    <res-ref-name>testDatabase</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+</resource-ref>   
+
+
+
+java
+
+@Resource(name="testDatabase", type=javax.sql.DataSource.class)      
+      
+      
+      
+<?xml version="1.0" encoding="UTF-8"?>
+<tomee>
+<!-- see http://tomee.apache.org/containers-and-resources.html -->
+<!-- Datasources for Prod -->   
+   <Resource id="DBWPC" type="javax.sql.DataSource">
+      DataSourceCreator tomcat
+      JdbcDriver oracle.jdbc.OracleDriver
+      JdbcUrl jdbc:oracle:thin:@x.x.com:1521:service
+      UserName xxxxx   
+      Password xxxx
+      jmxEnabled true
+      InitialSize 5
+      MaxActive 20
+      MaxIdle 20
+      MinIdle 0
+      MaxWait -1
+      ValidationQuery SELECT 1 FROM DUAL
+      PoolPreparedStatements true
+      MaxOpenPreparedStatements 0
+      TestWhileIdle true
+      timeBetweenEvictionRunsMillis 180000
+      JtaManaged true      
+   </Resource>
+ <!-- Standard JMS Setup for NON-SERVER **** START **** -->
+ <Resource id="PrimaryJMSRA" type="ActiveMQResourceAdapter">
+            BrokerXmlConfig=
+          ServerUrl = tcp://x.x.com:61616
+  </Resource>
+  <Resource id="JmsConnectionFactory" type="javax.jms.ConnectionFactory">
+            ResourceAdapter = PrimaryJMSRA
+    </Resource>
+ <Container id="JmsMdbContainer" ctype="MESSAGE">
+    ResourceAdapter = PrimaryJMSRA
+</Container>
+<Container id="wpcStatelessContainer" type="STATELESS">
+ accessTimeout = 30 seconds
+ callbackThreads = 5
+ closeTimeout = 5 minutes
+ garbageCollection = false
+ idleTimeout = 0 minutes
+ maxAge = 0 hours
+ maxAgeOffset = -1
+ maxSize = 5000
+ minSize = 20
+ replaceAged = true
+ replaceFlushed = false
+ strictPooling = false
+ sweepInterval = 5 minutes
+ </Container>
+ <Container id="wpcSingletonContainer" type="SINGLETON">
+    accessTimeout = 30 seconds
+</Container>      

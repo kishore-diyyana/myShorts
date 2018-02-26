@@ -1,0 +1,218 @@
+netstat -nao | findstr ":80"
+
+cf ssh <appName>
+
+bundle exec rake clean package OFFLINE=true PINNED=true
+
+cf set-env <APP> JBP_LOG_LEVEL DEBUG
+
+cf create-buildpack weblogic-buildpack <artifact> 1 --enable
+
+java -cp weblogic.jar weblogic.version
+
+cf set-env <APP> JBP_LOG_LEVEL DEBUG
+
+cf set-env <APP> CF_TRACE true
+
+cf set-env <APP> JBP_CONFIG_OPEN_JDK_JRE '{ jre: { version: 1.7.0_+ }, memory_calculator: { stack_threads: 200 } }'
+
+
+cf set-env <APP> JBP_CONFIG_OPEN_JDK_JRE '{ jre: { version: 1.6.0_+ }}'
+
+
+cf set-env <APP> JAVA_OPTS '-Dexample.port=$PORT'
+
+cf set-env <APP> JAVA_OPTS '-Dtomee.serialization.class.blacklist=-'
+
+cf cups myAppDataSource -p '{ "label" : "oracle",  "xaProtocol": "TwoPhaseCommit", "jndiName": "myAPPJNDINAME", "driver": "oracle.jdbc.OracleDriver", "initCapacity": 1, "maxCapacity": 4, "username": "myUserName", "password": "mypass", "hostname": "myIPAddress", "jdbcUrl": "jdbc:oracle:thin:@myOracleHost:1521/myService" }'
+
+
+Oracel DB size query:
+---------------------
+select
+     sum(bytes)/1024/1024 as size_in_mega, owner
+  from
+     dba_segments where owner='myDB'
+  group by
+owner;
+
+
+jdbc:oracle:thin:@(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = myhost)(PORT = 1521))(CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME = myService) ) )
+
+
+Files Size Search in Eclipse:
+  \n[\s]*  
+  \s+\n
+
+
+
+/*System.out.println("=============> "+System.getProperty("java.version"));
+System.out.println("java.class.path =============> "+System.getProperty("java.class.path"));
+System.out.println("java.class.version =============> "+System.getProperty("java.class.version"));
+System.out.println("java.home =============> "+System.getProperty("java.home"));
+System.out.println("user.home =============> "+System.getProperty("user.home"));
+System.out.println("user.name =============> "+System.getProperty("user.name"));
+System.out.println("user.dir =============> "+System.getProperty("user.dir"));
+System.out.println("Thread.currentThread().getContextClassLoader().getResourceAsStream(): "+ Thread.currentThread().getContextClassLoader().getResourceAsStream("//asa_dev.properties"));
+Path currentRelativePath = Paths.get("");
+String s = currentRelativePath.toAbsolutePath().toString();
+System.out.println("1 Current relative path is: " + s);
+System.out.println("2 Current relative path is: " + Paths.get(".").toAbsolutePath().normalize().toString());
+URL location = LoadASAProperties.class.getProtectionDomain().getCodeSource().getLocation();
+System.out.println("3 Current relative path is: "+location.getFile());
+System.out.println("4 Current relative path is: "+LoadASAProperties.class.getClassLoader().getResource("").getPath());
+*/
+"file.separator" - File separator (for example, "/") 
+"java.class.path" - Java classpath 
+"java.class.version" - Java class version number 
+"java.home" - Java installation directory 
+"java.vendor" - Java vendor-specific string 
+"java.vendor.url" - Java vendor URL 
+"java.version" - Java version number 
+ "line.separator" - Line separator 
+ "os.arch" - Operating system architecture 
+"os.name" - Operating system name 
+"os.version" - Operating system version 
+ "path.separator" - Path separator (for example, ":") 
+ "user.dir" - User's current working directory 
+"user.home" - User home directory 
+"user.name" - User account name    
+
+ System.out.println("=============> "+System.getProperty("java.version"));
+	  System.out.println("java.class.path =============> "+System.getProperty("java.class.path"));
+	  System.out.println("java.class.version =============> "+System.getProperty("java.class.version"));
+	  System.out.println("java.home =============> "+System.getProperty("java.home"));
+	  System.out.println("user.home =============> "+System.getProperty("user.home"));
+	  System.out.println("user.name =============> "+System.getProperty("user.name"));
+	  System.out.println("user.dir =============> "+System.getProperty("user.dir"));
+
+
+    public static String getServerInstanceDirectory()
+    {
+        return (new StringBuilder()).append(System.getProperty("bea.home")).append(System.getProperty("appl.home")).toString();
+    }
+
+    public static String getServerDomainDirectory()
+    {
+        return (new StringBuilder()).append(System.getProperty("bea.home")).append(System.getProperty("domain.home")).toString();
+    }
+    
+Using java.nio.file.Path and java.nio.file.Paths	  
+-------------------------------------------------
+	Path currentRelativePath = Paths.get("");
+	String s = currentRelativePath.toAbsolutePath().toString();
+	System.out.println("Current relative path is: " + s);
+  
+
+System.out.println("catalina.base =============> "+System.getProperty("catalina.base"));
+System.out.println("user.dir === ==========> "+System.getProperty("user.dir"));
+System.out.println("==== > "+Paths.get(".").toAbsolutePath().normalize().toString());
+System.out.println("--->"+this.getClass().getClassLoader().getResource("").getPath());
+Path currentRelativePath = Paths.get("");
+String s = currentRelativePath.toAbsolutePath().toString();
+System.out.println("Current relative path is: " + s);
+
+ URL location = ASAServlet.class.getProtectionDomain().getCodeSource().getLocation();
+System.out.println(location.getFile());
+
+URL myURL = getClass().getProtectionDomain().getCodeSource().getLocation();
+java.net.URI myURI = null;
+try {
+    myURI = myURL.toURI();
+} catch (URISyntaxException e1) 
+{}
+return java.nio.file.Paths.get(myURI).toFile().toString()
+
+Thread.currentThread().getContextClassLoader().getResourceAsStream(propertyFile2)  
+  
+
+String propertyFile = "/asa_dev.properties";
+//String propertyFile = "\\asa_dev.properties";
+//String propertyFile = "/home/vcap/app/APP-INF/asa.properties";
+System.out.println("=============> "+System.getProperty("java.version"));
+System.out.println("java.class.path =============> "+System.getProperty("java.class.path"));
+System.out.println("java.class.version =============> "+System.getProperty("java.class.version"));
+System.out.println("java.home =============> "+System.getProperty("java.home"));
+System.out.println("user.home =============> "+System.getProperty("user.home"));
+System.out.println("user.name =============> "+System.getProperty("user.name"));
+System.out.println("user.dir =============> "+System.getProperty("user.dir"));
+System.out.println("Thread.currentThread().getContextClassLoader().getResourceAsStream(): "+ Thread.currentThread().getContextClassLoader().getResourceAsStream("//asa_dev.properties"));
+
+Path currentRelativePath = Paths.get("");
+String s = currentRelativePath.toAbsolutePath().toString();
+System.out.println("1 Current relative path is: " + s);
+System.out.println("2 Current relative path is: " + Paths.get(".").toAbsolutePath().normalize().toString());
+
+
+URL location = LoadASAProperties.class.getProtectionDomain().getCodeSource().getLocation();
+System.out.println("3 Current relative path is: "+location.getFile());
+
+System.out.println("4 Current relative path is: "+LoadASAProperties.class.getClassLoader().getResource("").getPath());
+
+String filePath = LoadASAProperties.class.getProtectionDomain().getCodeSource().getLocation().getFile();
+
+System.out.println("1 filePath : "+filePath);
+// System.out.println("2 filePath : "+filePath.substring(1));
+//String pcfUserDir = Paths.get(filePath.substring(1)).getParent().getParent().toString();
+String pcfUserDir = Paths.get(filePath).getParent().getParent().toString();
+
+System.out.println("pcfUserDir : "+pcfUserDir);
+propertyFile = pcfUserDir + propertyFile;
+
+System.out.println("propertyFile : "+propertyFile);
+
+FileInputStream fis = null;
+try{
+String current = new File( "." ).getCanonicalPath();
+System.out.println("Current dir: "+current);
+
+fis = new FileInputStream(propertyFile);
+props = new Properties();
+props.load(fis);
+}
+catch(Exception e) {
+  return "bad";
+}  
+
+PCF War deployment:
+myApp.pcf-apps.kishore.com / home / vcap / app / APP-INF / wlsInstall / domains / myAppDomain / servers / myAppServer-0 / tmp / _WL_user / myApp / wtxq3t			
+			
+/home/vcap/app/APP-INF/classes/../.........
+  
+"http://localhost:" + env.read("PORT")
+
+
+PermSize=256m;
+MaxPermSize=256m
+
+
+
+Server Version: <%= application.getServerInfo() %><br>
+Servlet Version: <%= application.getMajorVersion() %>.<%= application.getMinorVersion() %>
+JSP Version: <%= JspFactory.getDefaultFactory().getEngineInfo().getSpecificationVersion() %>
+
+
+
+MVN
+===
+
+mvn install:install-file -DgroupId=org.apache.openejb -DartifactId=javaee-api-embedded -Dversion=6.0-3 -Dpackaging=jar -Dfile=/path/to/file
+
+Alternatively, if you host your own repository you can deploy the file there:
+      mvn deploy:deploy-file -DgroupId=org.apache.openejb -DartifactId=javaee-api-embedded -Dversion=6.0-3 -Dpackaging=jar -Dfile=/path/to/file -Durl=[url] -DrepositoryId=[id]
+      
+      
+      mvn clean install war:exploded tomcat:deploy
+      
+      
+ANT
+
+<target name="print-version"> 
+   <echo>ANT version: ${ant.version}</echo>
+   <echo>ANT Java/JVM version: ${ant.java.version}</echo>
+   <echo>Java/JVM detail version: ${java.version}</echo> 
+   <echo>Current System Java HOME: ${java.home}</echo>
+   <echo>Current ANT HOME: ${ant.home}</echo> 
+   <echo>Current java.class.version: ${java.class.version}</echo>
+   <echo>Current java.class.path: ${java.class.path}</echo>  
+</target>
